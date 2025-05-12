@@ -1,13 +1,15 @@
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "res.setHeader("Access-Control-Allow-Origin", "https://axomverse.com");
-"); // 
+  // ✅ Always send CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
+  // ✅ Respond to preflight
   if (req.method === "OPTIONS") {
-    return res.status(200).end(); // Pre-flight request
+    return res.status(200).end();
   }
 
+  // ✅ Handle POST request
   if (req.method === "POST") {
     try {
       const response = await fetch("https://script.google.com/macros/s/AKfycbym57J96D-Yhjt3bEyOoDrrojPedIqqFxG7H62NlaezJLy7dGFXMLAC7VqYlpNtEJW9/exec", {
@@ -26,4 +28,3 @@ export default async function handler(req, res) {
     res.status(405).json({ error: "Method not allowed" });
   }
 }
-
